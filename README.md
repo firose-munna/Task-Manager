@@ -2,6 +2,13 @@
 
 This is flutter project with REST API.
 
+## Completed Activity-
+1. UI design
+2. API Calling
+3. Sign up
+4. Sign in
+5. Create Task
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
