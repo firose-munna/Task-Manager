@@ -56,7 +56,7 @@ class NetworkCaller {
   Future<void> gotoLogin() async {
     await AuthUtility.clearUserInfo();
     Navigator.pushAndRemoveUntil(
-        TaskManagerApp.globalKey.currentState!.context,
+        TaskManagerApp.globalKey.currentContext!,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
         (route) => false);
   }
