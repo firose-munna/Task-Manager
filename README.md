@@ -8,6 +8,8 @@ This is flutter project with REST API.
 3. Sign up
 4. Sign in
 5. Create Task
+6. Sammary cart
+7. Task Reading
 
 ## Getting Started
 
