@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:taskmanager/app.dart';
@@ -16,7 +15,11 @@ class NetworkCaller {
       if (response.statusCode == 200) {
         return NetworkResponse(
             true, response.statusCode, jsonDecode(response.body));
-      } else {
+      }
+      else if (response.statusCode == 401) {
+        gotoLogin();
+      }
+      else {
         return NetworkResponse(false, response.statusCode, null);
       }
     } catch (e) {
@@ -26,7 +29,7 @@ class NetworkCaller {
   }
 
   Future<NetworkResponse> postRequest(
-      String url, Map<String, dynamic> body) async {
+      String url, Map<String, dynamic> body, {bool isLogin = false}) async {
     try {
       Response response = await post(
         Uri.parse(url),
@@ -35,6 +38,7 @@ class NetworkCaller {
           'Content-Type': 'application/json',
           'token': AuthUtility.userInfo.token.toString()
         },
+
       );
       log(response.statusCode.toString());
       log(response.body);
@@ -43,7 +47,9 @@ class NetworkCaller {
         return NetworkResponse(
             true, response.statusCode, jsonDecode(response.body));
       } else if (response.statusCode == 401) {
-        gotoLogin();
+        if (isLogin) {
+          gotoLogin();
+        }
       } else {
         return NetworkResponse(false, response.statusCode, null);
       }
