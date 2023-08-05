@@ -64,7 +64,7 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
                 itemBuilder: (context, index) {
                   return ItemCard(
                     child: TaskListTile(
-                      data: _taskListModel.data![index],
+                      data: _taskListModel.data![index], onDeleteTab: () {  }, onEditTab: () {  },
                     ),
                   );
                 },
