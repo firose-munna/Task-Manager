@@ -5,8 +5,10 @@ import 'package:taskmanager/data/model/taskListModel.dart';
 import 'package:taskmanager/data/services/networkCaller.dart';
 import 'package:taskmanager/data/utils/urls.dart';
 import 'package:taskmanager/ui/screens/addNewTaskScreen.dart';
+import 'package:taskmanager/ui/screens/bottomNavBaseScreen.dart';
 import 'package:taskmanager/ui/screens/updateTaskStatusBottomSheet.dart';
 import 'package:taskmanager/ui/widgets/iteamCard.dart';
+import 'package:taskmanager/ui/widgets/screenBackground.dart';
 import 'package:taskmanager/ui/widgets/summaryCard.dart';
 import 'package:taskmanager/ui/widgets/taskListTile.dart';
 import 'package:taskmanager/ui/widgets/userProfileBanner.dart';
@@ -40,6 +42,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       _taskListModel.data!.removeWhere((element) => element.sId == taskId);
       if (mounted) {
         setState(() {});
+
       }
     } else {
       if (mounted) {
@@ -93,116 +96,80 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const UserProfileBanner(),
+    return SafeArea(
+      child: Scaffold(
+        body: ScreenBackground(
+          child: Column(
+            children: [
+              const UserProfileBanner(),
 
-            _getCountSummaryInProgress
-                ? const LinearProgressIndicator()
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 70,
-                      width: double.infinity,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _summaryCountModel.data?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          return SummeryCard(
-                            title: _summaryCountModel.data![index].sId ?? 'New',
-                            number: _summaryCountModel.data![index].sum ?? 0,
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const Divider(
-                            height: 4,
-                          );
-                        },
+              _getCountSummaryInProgress
+                  ? const LinearProgressIndicator()
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: 70,
+                        width: double.infinity,
+                        child: ListView.separated(
+
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _summaryCountModel.data?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            return SummeryCard(
+                              title: _summaryCountModel.data![index].sId ?? 'New',
+                              number: _summaryCountModel.data![index].sum ?? 0,
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const Divider(
+                              height: 4,
+                            );
+                          },
+                        ),
                       ),
+
                     ),
-                    // Row(
-                    //   children: [
-                    //     Expanded(
-                    //         child: SummeryCard(
-                    //           number: _summaryCountModel.data![0].sum ?? 0,
-                    //           title: _summaryCountModel.data![0].sId ?? 'New',
-                    //         )),
-                    //     Expanded(
-                    //         child: SummeryCard(
-                    //           number: 15,
-                    //           title: 'Progress',
-                    //         )),
-                    //     Expanded(
-                    //         child: SummeryCard(
-                    //           number: 9,
-                    //           title: 'Cancel',
-                    //         )),
-                    //     Expanded(
-                    //         child: SummeryCard(
-                    //           number: _summaryCountModel.data![0].sum ?? 0,
-                    //           //number: 125,
-                    //           title: 'Completed',
-                    //         )),
-                    //   ],
-                    // ),
-                  ),
-            // SizedBox(
-            //   height: 70,
-            //   width: double.infinity,
-            //   child: ListView.separated(
-            //     scrollDirection: Axis.horizontal,
-            //     itemCount: _summaryCountModel.data?.length ?? 0,
-            //     itemBuilder: (context, index) {
-            //       return SummeryCard(
-            //         title: _summaryCountModel.data![index].sId ?? 'New',
-            //         number: _summaryCountModel.data![index].sum ?? 0,
-            //       );
-            //     },
-            //     separatorBuilder: (BuildContext context, int index) {
-            //       return const Divider(
-            //         height: 4,
-            //       );
-            //     },
-            //   ),
-            // ),
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  getNewTasks();
-                },
-                child: _getNewTaskInProgress
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ListView.builder(
-                        itemCount: _taskListModel.data?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          return ItemCard(
-                            child: TaskListTile(
-                              data: _taskListModel.data![index],
-                              onDeleteTab: () {
-                                deleteTask(_taskListModel.data![index].sId!);
-                              },
-                              onEditTab: () {
-                                showStatusUpdateBottomSheet(_taskListModel.data![index]);
-                              },
-                            ),
-                          );
-                        },
-                      ),
+
+
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    getNewTasks();
+                    getCountSummary();
+                  },
+                  child: _getNewTaskInProgress
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          itemCount: _taskListModel.data?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            return ItemCard(
+                              child: TaskListTile(
+                                data: _taskListModel.data![index],
+                                onDeleteTab: () {
+                                  deleteTask(_taskListModel.data![index].sId!);
+                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const BottomNavBaseScreen()), (route) => false);
+                                },
+                                onEditTab: () {
+                                  showStatusUpdateBottomSheet(_taskListModel.data![index]);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddNewTaskScreen()));
-        },
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddNewTaskScreen()));
+          },
+        ),
       ),
     );
   }

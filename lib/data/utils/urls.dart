@@ -10,4 +10,8 @@ class Urls{
   static String completeTasks = '$_baseUrl/listTaskByStatus/Completed';
   static String deleteTask(String id) => '$_baseUrl/deleteTask/$id';
   static String updateTask(String id, String status) => '$_baseUrl/updateTaskStatus/$id/$status';
+  static String updateProfile = '$_baseUrl/profileUpdate';
+  static String sendOtpToEmail(String email) => '$_baseUrl/RecoverVerifyEmail/$email';
+  static String otpVerify(String email, String otp) => '$_baseUrl/RecoverVerifyOTP/$email/$otp';
+  static String resetPassword = '$_baseUrl/RecoverResetPass';
 }

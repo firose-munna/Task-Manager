@@ -54,11 +54,29 @@ class _UpdateTaskStatusSheetState extends State<UpdateTaskStatusSheet> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 500,
+      height: 350,
       child: Column(
         children: [
-          const Padding(
-              padding: EdgeInsets.all(16), child: Text('Update Status')),
+          Row(
+            children: [
+
+              Padding(
+                padding: const EdgeInsets.only(left: 120),
+                child: Text(
+                  'Update Status',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          ),
+
           Expanded(
             child: ListView.builder(
                 itemCount: taskStatusList.length,
@@ -82,11 +100,15 @@ class _UpdateTaskStatusSheetState extends State<UpdateTaskStatusSheet> {
                   replacement: const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        updateTask(widget.task.sId!, _selectedTask);
-                      },
-                      child: const Text('Update'))))
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+
+                        onPressed: () {
+                          updateTask(widget.task.sId!, _selectedTask);
+                        },
+                        child: const Text('Update')),
+                  )))
         ],
       ),
     );

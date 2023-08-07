@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager/data/model/networkResponse.dart';
 import 'package:taskmanager/data/services/networkCaller.dart';
 import 'package:taskmanager/data/utils/urls.dart';
-import 'package:taskmanager/ui/screens/bottomNavBaseScreen.dart';
 import 'package:taskmanager/ui/widgets/screenBackground.dart';
 
 

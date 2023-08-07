@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager/data/model/networkResponse.dart';
 import 'package:taskmanager/data/services/networkCaller.dart';
 import 'package:taskmanager/data/utils/urls.dart';
+import 'package:taskmanager/ui/screens/bottomNavBaseScreen.dart';
+import 'package:taskmanager/ui/screens/newTaskScreen.dart';
 import 'package:taskmanager/ui/widgets/screenBackground.dart';
 
 import 'package:taskmanager/ui/widgets/userProfileBanner.dart';
@@ -42,6 +44,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Task added successfully')));
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const NewTaskScreen()), (route) => false);
       }
     } else {
       if (mounted) {
@@ -125,6 +128,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                   return;
                                 }
                                 addNewTask();
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const BottomNavBaseScreen()), (route) => false);
+
 
                               },
                               child: const Text("Add Task", style: TextStyle(fontSize: 16),)),
