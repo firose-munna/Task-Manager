@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/data/model/networkResponse.dart';
+import 'package:taskmanager/data/model/networ_response.dart';
 import 'package:taskmanager/data/services/networkCaller.dart';
 import 'package:taskmanager/data/utils/urls.dart';
-import 'package:taskmanager/ui/screens/auth/loginScreen.dart';
+import 'package:taskmanager/ui/screens/auth/login_screen.dart';
 import 'package:taskmanager/ui/widgets/screenBackground.dart';
 
 class SetPasswordScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   bool _setPasswordInProgress = false;
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<void> resetPassword() async {
     _setPasswordInProgress = true;

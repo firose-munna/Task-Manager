@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/data/model/networkResponse.dart';
+import 'package:taskmanager/data/model/networ_response.dart';
 import 'package:taskmanager/data/model/summaryCountModel.dart';
 import 'package:taskmanager/data/model/taskListModel.dart';
 import 'package:taskmanager/data/services/networkCaller.dart';
@@ -7,9 +7,9 @@ import 'package:taskmanager/data/utils/urls.dart';
 import 'package:taskmanager/ui/screens/addNewTaskScreen.dart';
 import 'package:taskmanager/ui/screens/bottomNavBaseScreen.dart';
 import 'package:taskmanager/ui/screens/updateTaskStatusBottomSheet.dart';
-import 'package:taskmanager/ui/widgets/iteamCard.dart';
+import 'package:taskmanager/ui/widgets/iteam_card.dart';
 import 'package:taskmanager/ui/widgets/screenBackground.dart';
-import 'package:taskmanager/ui/widgets/summaryCard.dart';
+import 'package:taskmanager/ui/widgets/summary_card.dart';
 import 'package:taskmanager/ui/widgets/taskListTile.dart';
 import 'package:taskmanager/ui/widgets/userProfileBanner.dart';
 
@@ -42,6 +42,8 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       _taskListModel.data!.removeWhere((element) => element.sId == taskId);
       if (mounted) {
         setState(() {});
+
+
 
       }
     } else {
@@ -153,6 +155,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                 },
                                 onEditTab: () {
                                   showStatusUpdateBottomSheet(_taskListModel.data![index]);
+
                                 },
                               ),
                             );
@@ -167,7 +170,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
           child: const Icon(Icons.add),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddNewTaskScreen()));
+                MaterialPageRoute(builder: (context) => const AddNewTaskScreen()));
           },
         ),
       ),
@@ -182,6 +185,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       builder: (context) {
         return UpdateTaskStatusSheet(task: task, onUpdate: () {
           getNewTasks();
+
         });
       },
     );

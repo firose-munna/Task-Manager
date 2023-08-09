@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:taskmanager/app.dart';
 import 'package:taskmanager/data/model/authUtilty.dart';
-import 'package:taskmanager/data/model/networkResponse.dart';
-import 'package:taskmanager/ui/screens/auth/loginScreen.dart';
+import 'package:taskmanager/data/model/networ_response.dart';
+import 'package:taskmanager/ui/screens/auth/login_screen.dart';
 
 class NetworkCaller {
   Future<NetworkResponse> getRequest(String url) async {

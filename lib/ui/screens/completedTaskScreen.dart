@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/data/model/networkResponse.dart';
+import 'package:taskmanager/data/model/networ_response.dart';
 import 'package:taskmanager/data/model/summaryCountModel.dart';
 import 'package:taskmanager/data/model/taskListModel.dart';
 import 'package:taskmanager/data/services/networkCaller.dart';
 import 'package:taskmanager/data/utils/urls.dart';
 import 'package:taskmanager/ui/screens/updateTaskStatusBottomSheet.dart';
-import 'package:taskmanager/ui/widgets/iteamCard.dart';
+import 'package:taskmanager/ui/widgets/iteam_card.dart';
 import 'package:taskmanager/ui/widgets/screenBackground.dart';
-import 'package:taskmanager/ui/widgets/summaryCard.dart';
+import 'package:taskmanager/ui/widgets/summary_card.dart';
 import 'package:taskmanager/ui/widgets/taskListTile.dart';
 import 'package:taskmanager/ui/widgets/userProfileBanner.dart';
 

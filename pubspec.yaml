@@ -20,9 +20,9 @@ dependencies:
   flutter_svg: ^2.0.7
   pin_code_fields: ^8.0.1
   http: ^1.1.0
-  #image_picker: ^1.0.1
+  image_picker: ^1.0.1
   shared_preferences: ^2.2.0
-  cached_network_image: ^3.2.3
+
 
 
 

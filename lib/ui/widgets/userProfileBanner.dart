@@ -1,53 +1,49 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:taskmanager/data/model/authUtilty.dart';
-import 'package:taskmanager/ui/screens/auth/loginScreen.dart';
+import 'package:taskmanager/ui/screens/auth/login_screen.dart';
 import 'package:taskmanager/ui/screens/updateProfileScreen.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
-class UserProfileBanner extends StatefulWidget {
-  final bool? isUpdateScreen;
+class UserProfileBanner extends StatelessWidget {
+  final bool? isInProfileUpdateScreen;
   const UserProfileBanner({
-    super.key, this.isUpdateScreen,
+    super.key,
+    this.isInProfileUpdateScreen,
   });
-
-  @override
-  State<UserProfileBanner> createState() => _UserProfileBannerState();
-}
-
-class _UserProfileBannerState extends State<UserProfileBanner> {
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       toolbarHeight: 80,
-
       backgroundColor: Colors.teal,
       title: GestureDetector(
-        onTap: () {
-          if ((widget.isUpdateScreen ?? false) == false) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const UpdateProfileScreen()));
-          }
+        onTap: isInProfileUpdateScreen == true
+            ? null
+            : () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const UpdateProfileScreen(),
+            ),
+          );
         },
         child: Row(
           children: [
             Visibility(
-              visible: (widget.isUpdateScreen ?? false) == false,
+              visible: isInProfileUpdateScreen == null,
               child: Row(
                 children: [
-                  CircleAvatar(
-                    radius: 20,
-                    child: CachedNetworkImage(
-                      placeholder: (_, __) => const Icon(Icons.account_circle),
-                      imageUrl: AuthUtility.userInfo.data?.photo ?? '',
-                      errorWidget: (_, __, ___) => const Icon(Icons.account_circle),
+                  Visibility(
+                    visible: AuthUtility.userInfo.data!.photo!.isNotEmpty,
+                    replacement: const Icon(Icons.account_circle, size: 40),
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: MemoryImage(
+                        base64Decode(AuthUtility.userInfo.data!.photo!),
+                      ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 16,
-                  ),
+                  const SizedBox(width: 10),
                 ],
               ),
             ),
@@ -55,11 +51,15 @@ class _UserProfileBannerState extends State<UserProfileBanner> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${AuthUtility.userInfo.data?.firstName ?? ''} ${AuthUtility.userInfo.data?.lastName ?? ''}',
-                  style: const TextStyle(fontSize: 15, color: Colors.white),
+                  "${AuthUtility.userInfo.data?.firstName ?? ''} ${AuthUtility.userInfo.data?.lastName ?? ''}",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
-                  AuthUtility.userInfo.data?.email ?? 'Unknown',
+                  AuthUtility.userInfo.data?.email ?? '',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
@@ -74,66 +74,21 @@ class _UserProfileBannerState extends State<UserProfileBanner> {
         IconButton(
           onPressed: () async {
             await AuthUtility.clearUserInfo();
-            if (mounted) {
+            Future.delayed(Duration.zero).then((value) {
               Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                      (route) => false);
-            }
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const LoginScreen();
+                  },
+                ),
+                    (route) => false,
+              );
+            });
           },
           icon: const Icon(Icons.logout),
         ),
       ],
     );
   }
-
-
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return GestureDetector(
-  //     onTap: (){
-  //       if((widget.isUpdateScreen ?? false) == false){
-  //         Navigator.push(context, MaterialPageRoute(builder: (context)=> const UpdateProfileScreen()));
-  //       }
-  //
-  //     },
-  //     child: ListTile(
-  //       contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-  //       tileColor: Colors.teal,
-  //       leading: CircleAvatar(
-  //         backgroundImage: NetworkImage(
-  //           AuthUtility.userInfo.data?.photo ?? '',
-  //         ),
-  //         onBackgroundImageError: (_, __) {
-  //           const Icon(Icons.image);
-  //         },
-  //         radius: 20,
-  //       ),
-  //       title: Text(
-  //         '${AuthUtility.userInfo.data?.firstName ?? ''} ${AuthUtility.userInfo.data?.lastName ?? ''}',
-  //         style: const TextStyle(fontSize: 15, color: Colors.white),
-  //       ),
-  //       subtitle: Text(
-  //         AuthUtility.userInfo.data?.email ?? 'Unknown',
-  //         style: const TextStyle(
-  //           color: Colors.white,
-  //           fontSize: 12,
-  //         ),
-  //       ),
-  //       trailing: IconButton(
-  //         onPressed: () async {
-  //           await AuthUtility.clearUserInfo();
-  //           if (mounted) {
-  //             Navigator.pushAndRemoveUntil(
-  //                 context,
-  //                 MaterialPageRoute(builder: (context) => const LoginScreen()), (
-  //                 route) => false);
-  //           }
-  //         },
-  //         icon: const Icon(Icons.logout, color: Colors.white,),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/data/model/networkResponse.dart';
+import 'package:taskmanager/data/model/networ_response.dart';
 import 'package:taskmanager/data/model/taskListModel.dart';
 import 'package:taskmanager/data/services/networkCaller.dart';
 import 'package:taskmanager/data/utils/urls.dart';

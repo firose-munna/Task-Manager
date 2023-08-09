@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:taskmanager/data/model/networkResponse.dart';
+import 'package:taskmanager/data/model/networ_response.dart';
 import 'package:taskmanager/data/services/networkCaller.dart';
 import 'package:taskmanager/data/utils/urls.dart';
-import 'package:taskmanager/ui/screens/auth/loginScreen.dart';
+import 'package:taskmanager/ui/screens/auth/login_screen.dart';
 import 'package:taskmanager/ui/screens/auth/setPasswordScreen.dart';
 import 'package:taskmanager/ui/widgets/screenBackground.dart';
 
